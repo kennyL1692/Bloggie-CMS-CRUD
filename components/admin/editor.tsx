@@ -13,7 +13,8 @@ import {
   Quote, Code, Link as LinkIcon, Image as ImageIcon,
   Minus, Undo, Redo,
 } from "lucide-react"
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
+import { MediaPickerModal } from "@/components/admin/media-picker-modal"
 
 const lowlight = createLowlight(common)
 
@@ -51,10 +52,16 @@ export function Editor({ content = "", onChange, placeholder = "Start writing...
     if (url) editor?.chain().focus().setLink({ href: url }).run()
   }, [editor])
 
+  const [mediaPickerOpen, setMediaPickerOpen] = useState(false)
+
   const addImage = useCallback(() => {
-    const url = window.prompt("Image URL")
-    if (url) editor?.chain().focus().setImage({ src: url }).run()
-  }, [editor])
+    setMediaPickerOpen(true)
+  }, [])
+
+  function handleMediaSelect(url: string) {
+    editor?.chain().focus().setImage({ src: url }).run()
+    setMediaPickerOpen(false)
+  }
 
   if (!editor) return (
     <div className="border border-[#e8e6dc] rounded-xl bg-white overflow-hidden min-h-[480px] flex items-center justify-center">
@@ -146,6 +153,14 @@ export function Editor({ content = "", onChange, placeholder = "Start writing...
         <span>{editor.storage.characterCount.words()} words</span>
         <span>{editor.storage.characterCount.characters()} characters</span>
       </div>
+
+      {/* Media picker modal */}
+      {mediaPickerOpen && (
+        <MediaPickerModal
+          onSelect={handleMediaSelect}
+          onClose={() => setMediaPickerOpen(false)}
+        />
+      )}
     </div>
   )
 }

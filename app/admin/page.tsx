@@ -48,7 +48,7 @@ const guideSteps = [
     step: "03",
     icon: FolderOpen,
     title: "Upload images to Media",
-    desc: "Go to Media and drag-and-drop images or click to upload. Once uploaded, hover any image and click the copy icon to grab its URL — then paste it into any post or page.",
+    desc: "Go to Media and drag-and-drop images or click to upload. When writing a post, click the image icon (🖼) in the editor toolbar to open the media picker — browse your library and click any image to insert it instantly.",
     href: "/admin/media",
     cta: "Open Media →",
   },
@@ -193,7 +193,7 @@ export default async function DashboardPage() {
 
       {/* ── How-to reference — always visible, collapsed style ── */}
       {!isNew && (
-        <details className="bg-white rounded-2xl border border-[#e8e6dc] overflow-hidden shadow-warm-sm group">
+        <details open className="bg-white rounded-2xl border border-[#e8e6dc] overflow-hidden shadow-warm-sm group">
           <summary className="px-6 py-4 flex items-center justify-between cursor-pointer list-none hover:bg-[#faf9f5] transition-colors">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#d97757]" />
